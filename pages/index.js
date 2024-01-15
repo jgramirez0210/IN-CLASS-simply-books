@@ -12,7 +12,6 @@ function Home() {
 
   // TODO: Get user ID using useAuth Hook
   const { user } = useAuth();
-
   // TODO: create a function that makes the API call to get all the books
   const getAllTheBooks = () => {
     getBooks(user.uid).then(setBooks);
@@ -26,7 +25,10 @@ function Home() {
   return (
     <div className="text-center my-4">
       <Link href="/book/new" passHref>
-        <Button>Add A Book</Button>
+        <>
+          <Button>Add A Book</Button>
+          <Button>Add A Author</Button>
+        </>
       </Link>
       <div className="d-flex flex-wrap">
         {/* TODO: map over books here using BookCard component */}

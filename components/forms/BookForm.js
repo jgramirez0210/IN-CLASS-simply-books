@@ -25,7 +25,7 @@ function BookForm({ obj }) {
   useEffect(() => {
     getAuthors(user.uid).then(setAuthors);
 
-    if (obj.firebaseKey) setFormInput(obj);
+    if (obj && obj.firebaseKey) setFormInput(obj);
   }, [obj, user]);
 
   const handleChange = (e) => {
@@ -51,10 +51,9 @@ function BookForm({ obj }) {
     }
   };
 
-
   return (
     <Form onSubmit={handleSubmit}>
-      <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'} Book</h2>
+      <h2 className="text-white mt-5">{obj && obj.firebaseKey ? 'Update' : 'Create'} Book</h2>
 
       {/* TITLE INPUT  */}
       <FloatingLabel controlId="floatingInput1" label="Book Title" className="mb-3">
@@ -99,7 +98,7 @@ function BookForm({ obj }) {
           name="author_id"
           onChange={handleChange}
           className="mb-3"
-          value={obj.author_id} // FIXME: modify code to remove error
+          value={obj && obj.author_id} // FIXME: modify code to remove error
           required
         >
           <option value="">Select an Author</option>
@@ -146,7 +145,7 @@ function BookForm({ obj }) {
       />
 
       {/* SUBMIT BUTTON  */}
-      <Button type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Book</Button>
+      <Button type="submit">{obj && obj.firebaseKey ? 'Update' : 'Create'} Book</Button>
     </Form>
   );
 }

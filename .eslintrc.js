@@ -34,6 +34,7 @@ module.exports = {
     'no-debugger': 1,
     'linebreak-style': 0,
     'max-len': [1, 600, 2],
+    '@next/next/no-img-element': 'off',
     'no-plusplus': [
       2,
       {
