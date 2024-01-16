@@ -68,9 +68,11 @@ const updateBook = (payload) => new Promise((resolve, reject) => {
     .then((data) => resolve(data))
     .catch(reject);
 });
-
-const getBooksByAuthor = (firebaseKey) => new Promise((resolve, reject) => {
-  fetch(`${endpoint}/books.json?orderBy="author_id"&equalTo="${firebaseKey}"`, {
+// eslint-disable-next-line camelcase
+const getBooksByAuthor = (author_id) => new Promise((resolve, reject) => {
+  console.warn('author_id:', author_id);
+  // eslint-disable-next-line camelcase
+  fetch(`${endpoint}/books.json?orderBy="author_id"&equalTo="${author_id}"`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

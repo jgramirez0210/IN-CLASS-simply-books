@@ -1,33 +1,37 @@
-/* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { viewAuthorDetails } from '../../api/mergedData';
+import BookCard from '../../components/BookCard';
+import { getSingleAuthor } from '../../api/authorData';
+import { getBooksByAuthor, getBooks } from '../../api/bookData';
 
-export default function ViewAuthor() {
-  const [authorDetails, setAuthorDetails] = useState({});
+const ViewAuthor = () => {
   const router = useRouter();
-
-  // TODO: grab firebaseKey from url
   const { firebaseKey } = router.query;
 
-  // TODO: make call to API layer to get the data
+  const [authorDetails, setAuthorDetails] = useState({});
+  const [books, setBooks] = useState([]);
+
   useEffect(() => {
-    viewAuthorDetails(firebaseKey).then(setAuthorDetails);
+    getSingleAuthor(firebaseKey).then((author) => {
+      setAuthorDetails(author);
+    });
+
+    getBooksByAuthor(firebaseKey).then((fetchedBooks) => {
+      setBooks(fetchedBooks);
+    });
   }, [firebaseKey]);
 
   return (
-    <div className="mt-5 d-flex flex-wrap">
-      <div className="text-white ms-5 details">
-        <h5>
-          {authorDetails.title} by {authorDetails.authorObject?.first_name} {authorDetails.authorObject?.last_name}
-        </h5>
-        <hr />
-        <p>
-          {authorDetails.sale
-            ? `🏷️ Sale $${authorDetails.price}`
-            : `$${authorDetails.price}`}
-        </p>
-      </div>
+    <div>
+      <h1>{authorDetails ? `${authorDetails.first_name} ${authorDetails.last_name}` : 'Loading...'}</h1>
+      <p>Email: {authorDetails && authorDetails.email}</p>
+      <p>Favorite: {authorDetails && (authorDetails.favorite ? ' 🤍' : '')}</p>
+      <h2>Books:</h2>
+      {books.map((book) => (
+        <BookCard key={book.firebaseKey} bookObj={book} onUpdate={getBooks} />
+      ))}
     </div>
   );
-}
+};
+
+export default ViewAuthor;
