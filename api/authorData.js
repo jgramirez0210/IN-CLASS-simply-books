@@ -11,7 +11,6 @@ const getAuthors = (uid) => new Promise((resolve, reject) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.warn('author data', data);
       if (data) {
         resolve(Object.values(data));
       } else {
@@ -54,7 +53,23 @@ const deleteSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
 const updateAuthor = () => {};
 
 // TODO: GET A SINGLE AUTHOR'S BOOKS
-const getAuthorBooks = () => {};
+const getSingleAuthorsBooks = (authorKey) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/books.json?orderBy="authorKey"&equalTo="${authorKey}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const books = Object.keys(data).map((key) => ({
+        firebaseKey: key,
+        ...data[key],
+      }));
+      resolve(books);
+    })
+    .catch(reject);
+});
 
 const favoriteAuthors = (uid) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/authors.json?orderBy="uid"&equalTo="${uid}"`, {
@@ -78,5 +93,5 @@ export {
   deleteSingleAuthor,
   updateAuthor,
   favoriteAuthors,
-  getAuthorBooks,
+  getSingleAuthorsBooks,
 };
