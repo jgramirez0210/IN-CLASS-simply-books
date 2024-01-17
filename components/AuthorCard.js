@@ -44,6 +44,7 @@ AuthorCard.propTypes = {
     last_name: PropTypes.string,
     email: PropTypes.string,
     favorite: PropTypes.bool,
+    author_id: PropTypes.string,
     firebaseKey: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,

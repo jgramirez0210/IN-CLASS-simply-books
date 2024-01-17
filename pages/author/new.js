@@ -11,6 +11,7 @@ export default function ViewAllAuthors() {
 
   const handleUpdate = (authorKey) => {
     // Code to update the author with the given key...
+    getAuthors().then(setAuthors);
     console.warn(`Update author with key: ${authorKey}`);
   };
 
