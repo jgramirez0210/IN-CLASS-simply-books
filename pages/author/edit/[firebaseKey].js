@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getSingleAuthor } from '../../../api/authorData';
-import BookForm from '../../../components/forms/BookForm';
+import AuthorForm from '../../../components/forms/AuthorForm';
 
 export default function EditBook() {
   const [editItem, setEditItem] = useState({});
@@ -15,5 +15,5 @@ export default function EditBook() {
   }, [firebaseKey]);
 
   // TODO: pass object to form
-  return (<BookForm obj={editItem} />);
+  return (<AuthorForm obj={editItem} />);
 }

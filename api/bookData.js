@@ -70,7 +70,6 @@ const updateBook = (payload) => new Promise((resolve, reject) => {
 });
 // eslint-disable-next-line camelcase
 const getBooksByAuthor = (author_id) => new Promise((resolve, reject) => {
-  console.warn('author_id:', author_id);
   // eslint-disable-next-line camelcase
   fetch(`${endpoint}/books.json?orderBy="author_id"&equalTo="${author_id}"`, {
     method: 'GET',

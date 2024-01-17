@@ -21,7 +21,18 @@ const getAuthors = (uid) => new Promise((resolve, reject) => {
 });
 
 // FIXME: CREATE AUTHOR
-const createAuthor = () => {};
+const createAuthor = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/authors.json`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
 
 // FIXME: GET SINGLE AUTHOR
 const getSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
@@ -37,7 +48,7 @@ const getSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 // FIXME: DELETE AUTHOR
-const deleteSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
+const deleteAuthor = (firebaseKey) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/authors/${firebaseKey}.json`, {
     method: 'DELETE',
     headers: {
@@ -50,7 +61,15 @@ const deleteSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 // FIXME: UPDATE AUTHOR
-const updateAuthor = () => {};
+const updateAuthor = (payload) => fetch(`${endpoint}/authors/${payload.firebaseKey}.json`, {
+  method: 'PATCH',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(payload),
+})
+  .then((response) => response.json())
+  .catch((error) => console.error('Failed to update author:', error));
 
 // TODO: GET A SINGLE AUTHOR'S BOOKS
 const getSingleAuthorsBooks = (authorKey) => new Promise((resolve, reject) => {
@@ -67,6 +86,19 @@ const getSingleAuthorsBooks = (authorKey) => new Promise((resolve, reject) => {
         ...data[key],
       }));
       resolve(books);
+    })
+    .catch(reject);
+});
+const deleteSingleAuthor = (authorId) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/authors/${authorId}.json`, {
+    method: 'DELETE',
+  })
+    .then((response) => {
+      if (response.ok) {
+        resolve();
+      } else {
+        reject(new Error('Error deleting author'));
+      }
     })
     .catch(reject);
 });
@@ -90,8 +122,9 @@ export {
   getAuthors,
   createAuthor,
   getSingleAuthor,
-  deleteSingleAuthor,
+  deleteAuthor,
   updateAuthor,
   favoriteAuthors,
   getSingleAuthorsBooks,
+  deleteSingleAuthor,
 };
