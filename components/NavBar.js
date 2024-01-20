@@ -4,10 +4,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import {
-  Navbar, Container, Nav,
+  Navbar, Container, Nav, Image,
 } from 'react-bootstrap';
 
-export default function NavBar() {
+export default function NavBar({ user }) {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -30,6 +30,9 @@ export default function NavBar() {
             <Link passHref href="/book/new">
               <Nav.Link>Create Book</Nav.Link>
             </Link>
+            <Nav>
+              {user && <Image src={user.photoURL} roundedCircle width="30" height="30" />}
+            </Nav>
           </Nav>
         </Navbar.Collapse>
       </Container>
