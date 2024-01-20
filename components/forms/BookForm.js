@@ -98,7 +98,7 @@ function BookForm({ obj }) {
           name="author_id"
           onChange={handleChange}
           className="mb-3"
-          value={obj && obj.author_id} // FIXME: modify code to remove error
+          value={formInput.author_id} // FIXME: modify code to remove error
           required
         >
           <option value="">Select an Author</option>
@@ -145,7 +145,7 @@ function BookForm({ obj }) {
       />
 
       {/* SUBMIT BUTTON  */}
-      <Button type="submit">{obj && obj.firebaseKey ? 'Update' : 'Create'} Book</Button>
+      <Button type="submit">{formInput.firebaseKey ? 'Update' : 'Create'} Book</Button>
     </Form>
   );
 }
